@@ -1,33 +1,40 @@
 import cv2
 
+from config import CASCADE_FILE
+
 
 class Vision:
+
     def __init__(self):
-        self.face = cv2.CascadeClassifier(
-            cv2.data.haarcascades +
-            "haarcascade_frontalface_default.xml"
-        )
+
+        self.detector = cv2.CascadeClassifier(CASCADE_FILE)
 
     def detect(self, frame):
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(
+            frame,
+            cv2.COLOR_BGR2GRAY
+        )
 
-        faces = self.face.detectMultiScale(
+        faces = self.detector.detectMultiScale(
             gray,
             scaleFactor=1.2,
             minNeighbors=5,
-            minSize=(50, 50)
+            minSize=(60, 60)
         )
 
         if len(faces) == 0:
             return None
 
-        x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
-
-        cx = x + w // 2
-        cy = y + h // 2
+        x, y, w, h = max(
+            faces,
+            key=lambda face: face[2] * face[3]
+        )
 
         return {
             "box": (x, y, w, h),
-            "center": (cx, cy)
+            "center": (
+                x + w // 2,
+                y + h // 2
+            )
         }

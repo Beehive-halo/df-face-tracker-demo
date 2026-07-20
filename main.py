@@ -1,46 +1,61 @@
+import time
+import cv2
+import os
+
 from camera import Camera
 from vision import Vision
 from controller import Controller
-from debug import Debug
+from servos import Servos
 
-import cv2
+from config import *
 
 
-cam = Camera()
+camera = Camera()
 vision = Vision()
 controller = Controller()
-debug = Debug()
+servos = Servos()
 
+last_time = time.time()
+
+HAS_DISPLAY = (
+    "DISPLAY" in os.environ
+    or "WAYLAND_DISPLAY" in os.environ
+)
 
 while True:
 
-    ret, frame = cam.read()
+    ret, frame = camera.read()
 
     if not ret:
         break
 
-    height, width = frame.shape[:2]
+    h, w = frame.shape[:2]
+
+    current = time.time()
+    fps = 1 / (current - last_time)
+    last_time = current
+
+    cv2.drawMarker(
+        frame,
+        (w // 2, h // 2),
+        SCREEN_CENTER,
+        cv2.MARKER_CROSS,
+        20,
+        2
+    )
 
     result = vision.detect(frame)
 
-    cv2.circle(
-        frame,
-        (width // 2, height // 2),
-        5,
-        (255, 0, 0),
-        -1
-    )
-
     if result:
 
-        x, y, w, h = result["box"]
+        x, y, bw, bh = result["box"]
         cx, cy = result["center"]
 
         cv2.rectangle(
             frame,
             (x, y),
-            (x + w, y + h),
-            (0, 255, 0),
+            (x + bw, y + bh),
+            FACE_BOX,
             2
         )
 
@@ -48,49 +63,102 @@ while True:
             frame,
             (cx, cy),
             5,
-            (0, 0, 255),
+            FACE_CENTER,
             -1
         )
 
         cv2.line(
             frame,
-            (width // 2, height // 2),
+            (w // 2, h // 2),
             (cx, cy),
-            (255, 255, 0),
+            TRACK_LINE,
             2
         )
 
         data = controller.update(
             cx,
             cy,
-            width,
-            height
+            w,
+            h
         )
 
-        data["tracking"] = "YES"
+        servos.move(
+            data["pan"],
+            data["tilt"]
+        )
+
+        tracking = "YES"
 
     else:
 
         data = {
             "pan": controller.pan,
-            "tilt": controller.tilt,
-            "error_x": 0,
-            "error_y": 0,
-            "tracking": "NO"
+            "tilt": controller.tilt
         }
 
+        tracking = "NO"
 
-    debug.show(data)
+    cv2.putText(
+        frame,
+        f"Tracking: {tracking}",
+        (10, 25),
+        FONT,
+        0.6,
+        TEXT,
+        2
+    )
+
+    cv2.putText(
+        frame,
+        f"Pan: {data['pan']:.1f}",
+        (10, 50),
+        FONT,
+        0.6,
+        TEXT,
+        2
+    )
+
+    cv2.putText(
+        frame,
+        f"Tilt: {data['tilt']:.1f}",
+        (10, 75),
+        FONT,
+        0.6,
+        TEXT,
+        2
+    )
+
+    cv2.putText(
+        frame,
+        f"FPS: {fps:.1f}",
+        (10, 100),
+        FONT,
+        0.6,
+        TEXT,
+        2
+    )
+
+    if FULLSCREEN:
+
+        cv2.namedWindow(
+            "Face Tracker",
+            cv2.WINDOW_NORMAL
+        )
+
+        cv2.setWindowProperty(
+            "Face Tracker",
+            cv2.WND_PROP_FULLSCREEN,
+            cv2.WINDOW_FULLSCREEN
+        )
 
     cv2.imshow(
         "Face Tracker",
         frame
     )
 
-
     if cv2.waitKey(1) == 27:
         break
 
 
-cam.release()
+camera.release()
 cv2.destroyAllWindows()

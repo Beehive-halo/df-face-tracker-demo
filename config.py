@@ -1,13 +1,56 @@
-FRAME_WIDTH = 320
-FRAME_HEIGHT = 240
+import cv2
 
-DEAD_ZONE = 20
+# =========================
+# Camera
+# =========================
 
-KP_PAN = 0.02
-KP_TILT = 0.02
+USE_PI_CAMERA = True
+CAMERA_INDEX = 0
+
+FRAME_WIDTH = 640
+FRAME_HEIGHT = 480
+
+# =========================
+# Face Detection
+# =========================
+
+CASCADE_FILE = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+
+# =========================
+# Controller
+# =========================
+
+KP_PAN = 0.08
+KP_TILT = 0.08
+
+DEAD_ZONE = 18
 
 PAN_MIN = -90
 PAN_MAX = 90
 
-TILT_MIN = -90
-TILT_MAX = 90
+TILT_MIN = -45
+TILT_MAX = 45
+
+# =========================
+# Servos
+# =========================
+
+USE_SERVOS = True
+
+# =========================
+# Display
+# =========================
+
+FULLSCREEN = True
+
+# =========================
+# Drawing
+# =========================
+
+FACE_BOX = (0,255,0)
+FACE_CENTER = (0,0,255)
+SCREEN_CENTER = (255,255,255)
+TRACK_LINE = (255,255,0)
+TEXT = (255,255,255)
+
+FONT = cv2.FONT_HERSHEY_SIMPLEX

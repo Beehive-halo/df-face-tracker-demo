@@ -4,6 +4,7 @@ from config import *
 class Controller:
 
     def __init__(self):
+
         self.pan = 0.0
         self.tilt = 0.0
 

@@ -1,41 +1,30 @@
-import cv2
-import numpy as np
+from config import *
+
+import pantilthat
 
 
-class Debug:
+class Servos:
 
     def __init__(self):
 
-        self.width = 400
-        self.height = 250
+        self.pan = 0
+        self.tilt = 0
 
-    def show(self, data):
+        pantilthat.pan(0)
+        pantilthat.tilt(0)
 
-        img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
+    def move(self, target_pan, target_tilt):
 
-        lines = [
-            f"Pan      : {data['pan']:.1f}",
-            f"Tilt     : {data['tilt']:.1f}",
-            "",
-            f"Error X  : {data['error_x']}",
-            f"Error Y  : {data['error_y']}",
-            "",
-            f"Tracking : {data['tracking']}"
-        ]
+        self.pan += (target_pan - self.pan) * 0.25
+        self.tilt += (target_tilt - self.tilt) * 0.25
 
-        y = 40
+        pantilthat.pan(self.pan)
+        pantilthat.tilt(self.tilt)
 
-        for line in lines:
-            cv2.putText(
-                img,
-                line,
-                (20, y),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                (255, 255, 255),
-                2
-            )
+    def centre(self):
 
-            y += 30
+        self.pan = 0
+        self.tilt = 0
 
-        cv2.imshow("Debug", img)
+        pantilthat.pan(0)
+        pantilthat.tilt(0)

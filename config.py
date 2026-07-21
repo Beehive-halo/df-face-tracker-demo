@@ -14,7 +14,7 @@ FRAME_HEIGHT = 480
 # Face Detection
 # =========================
 
-CASCADE_FILE = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+CASCADE_FILE = "haarcascade_frontalface_default.xml"
 
 # =========================
 # Controller

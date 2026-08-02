@@ -8,13 +8,13 @@ class Controller:
         self.pan = 0.0
         self.tilt = 0.0
 
-    def update(self, face_x, face_y, frame_width, frame_height):
+    def update(self, face_x, face_y, width, height):
 
-        center_x = frame_width // 2
-        center_y = frame_height // 2
+        centre_x = width // 2
+        centre_y = height // 2
 
-        error_x = face_x - center_x
-        error_y = face_y - center_y
+        error_x = face_x - centre_x
+        error_y = face_y - centre_y
 
         if abs(error_x) > DEAD_ZONE:
             self.pan -= error_x * KP_PAN

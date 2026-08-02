@@ -1,13 +1,15 @@
 import cv2
 
-from config import CASCADE_FILE
+from config import *
 
 
 class Vision:
 
     def __init__(self):
 
-        self.detector = cv2.CascadeClassifier(CASCADE_FILE)
+        self.detector = cv2.CascadeClassifier(
+            CASCADE_FILE
+        )
 
     def detect(self, frame):
 
@@ -19,8 +21,8 @@ class Vision:
         faces = self.detector.detectMultiScale(
             gray,
             scaleFactor=1.2,
-            minNeighbors=5,
-            minSize=(60, 60)
+            minNeighbors=6,
+            minSize=(80,80)
         )
 
         if len(faces) == 0:
@@ -28,13 +30,16 @@ class Vision:
 
         x, y, w, h = max(
             faces,
-            key=lambda face: face[2] * face[3]
+            key=lambda f: f[2] * f[3]
         )
 
         return {
-            "box": (x, y, w, h),
+
+            "box": (x,y,w,h),
+
             "center": (
-                x + w // 2,
-                y + h // 2
+                x + w//2,
+                y + h//2
             )
+
         }

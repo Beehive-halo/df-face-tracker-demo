@@ -4,7 +4,7 @@ import cv2
 # Camera
 # =========================
 
-USE_PI_CAMERA = False
+USE_PI_CAMERA = True
 CAMERA_INDEX = 0
 
 FRAME_WIDTH = 640
@@ -35,13 +35,13 @@ TILT_MAX = 45
 # Servos
 # =========================
 
-USE_SERVOS = False
+USE_SERVOS = True
 
 # =========================
 # Display
 # =========================
 
-FULLSCREEN = True
+FULLSCREEN = False
 
 # =========================
 # Drawing

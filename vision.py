@@ -1,6 +1,6 @@
 import cv2
 
-from config import *
+from config import CASCADE_FILE
 
 
 class Vision:
@@ -11,6 +11,12 @@ class Vision:
             CASCADE_FILE
         )
 
+        if self.detector.empty():
+            print("ERROR: Cascade failed loading")
+        else:
+            print("Cascade loaded")
+
+
     def detect(self, frame):
 
         gray = cv2.cvtColor(
@@ -20,22 +26,33 @@ class Vision:
 
         faces = self.detector.detectMultiScale(
             gray,
-            scaleFactor=1.2,
-            minNeighbors=6,
-            minSize=(80,80)
+            scaleFactor=1.05,
+            minNeighbors=3,
+            minSize=(40,40)
         )
+
 
         if len(faces) == 0:
             return None
 
-        x, y, w, h = max(
+
+        face = max(
             faces,
             key=lambda f: f[2] * f[3]
         )
 
+
+        x,y,w,h = face
+
+
         return {
 
-            "box": (x,y,w,h),
+            "box": (
+                x,
+                y,
+                w,
+                h
+            ),
 
             "center": (
                 x + w//2,

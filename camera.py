@@ -2,31 +2,35 @@ from picamera2 import Picamera2
 import cv2
 import time
 
-from config import *
+from config import FRAME_WIDTH, FRAME_HEIGHT
 
 
 class Camera:
 
     def __init__(self):
 
-        self.camera = Picamera2()
+        self.picam2 = Picamera2()
 
-        config = self.camera.create_preview_configuration(
+        config = self.picam2.create_preview_configuration(
             main={
-                "size": (FRAME_WIDTH, FRAME_HEIGHT),
+                "size": (
+                    FRAME_WIDTH,
+                    FRAME_HEIGHT
+                ),
                 "format": "RGB888"
             }
         )
 
-        self.camera.configure(config)
+        self.picam2.configure(config)
 
-        self.camera.start()
+        self.picam2.start()
 
         time.sleep(2)
 
+
     def read(self):
 
-        frame = self.camera.capture_array()
+        frame = self.picam2.capture_array()
 
         frame = cv2.cvtColor(
             frame,
@@ -35,6 +39,7 @@ class Camera:
 
         return True, frame
 
+
     def release(self):
 
-        self.camera.stop()
+        self.picam2.stop()

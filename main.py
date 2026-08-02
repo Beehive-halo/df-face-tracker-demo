@@ -2,6 +2,7 @@ from camera import Camera
 from vision import Vision
 from controller import Controller
 from servos import Servos
+
 from config import *
 
 import time
@@ -12,24 +13,34 @@ vision = Vision()
 controller = Controller()
 servos = Servos()
 
-print("Face tracker started.")
-print("Press Ctrl+C to quit.")
+
+print("Tracker started")
+
 
 try:
 
     while True:
 
+
         ret, frame = camera.read()
 
+
         if not ret:
-            print("Camera error.")
+
+            print("Camera failed")
             break
+
+
 
         result = vision.detect(frame)
 
+
+
         if result:
 
-            cx, cy = result["center"]
+
+            cx,cy = result["center"]
+
 
             data = controller.update(
                 cx,
@@ -38,30 +49,44 @@ try:
                 FRAME_HEIGHT
             )
 
+
+            print(
+                f"\rFACE FOUND "
+                f"Pan:{data['pan']:.1f} "
+                f"Tilt:{data['tilt']:.1f}",
+                end=""
+            )
+
+
             if USE_SERVOS:
+
                 servos.move(
                     data["pan"],
                     data["tilt"]
                 )
 
-            print(
-                f"\rTracking | "
-                f"Pan {data['pan']:.1f}°  "
-                f"Tilt {data['tilt']:.1f}°",
-                end=""
-            )
 
         else:
 
-            print("\rSearching for face...", end="")
 
-        time.sleep(0.02)
+            print(
+                "\rSearching for face...",
+                end=""
+            )
+
+
+
+        time.sleep(0.05)
+
+
 
 except KeyboardInterrupt:
 
-    print("\nStopping...")
+    print("\nStopping")
+
 
 finally:
 
     servos.centre()
+
     camera.release()

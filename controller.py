@@ -30,7 +30,7 @@ class Controller:
 
         if abs(error_y) > DEAD_ZONE:
 
-            self.tilt += error_y * KP_TILT
+            self.tilt -= error_y * KP_TILT
 
 
         self.pan = max(

@@ -11,12 +11,15 @@ USE_SERVOS = False
 PAN_MIN = -90
 PAN_MAX = 90
 
-TILT_MIN = -45
-TILT_MAX = 45
+TILT_MIN = 0
+TILT_MAX = 180
 
+# Default startup position
+DEFAULT_PAN = 0
+DEFAULT_TILT = 90
 
 # Tracking tuning
-KP_PAN = 0.08
-KP_TILT = 0.08
+KP_PAN = 0.02
+KP_TILT = 0.02
 
 DEAD_ZONE = 30

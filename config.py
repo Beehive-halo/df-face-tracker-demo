@@ -19,9 +19,18 @@ DETECTION_SCALE_FACTOR = 1.12
 DETECTION_MIN_NEIGHBORS = 5
 DETECTION_MIN_SIZE = (32, 32)
 
-# Optional debug window. Disable for best performance/headless use.
+# Optional local debug window. Disable for best performance/headless use.
 SHOW_PREVIEW = False
 SHOW_FPS = True
+
+# Browser stream for another device on the same local network.
+# Open the URL printed by main.py on your Mac.
+ENABLE_STREAM = True
+STREAM_HOST = "0.0.0.0"
+STREAM_PORT = 8000
+STREAM_FPS = 5
+STREAM_JPEG_QUALITY = 65
+STREAM_SHOW_OVERLAY = True
 
 # Keep disabled until camera detection and servo power are confirmed stable.
 USE_SERVOS = False

@@ -1,9 +1,10 @@
-# Lightweight Demo Face tracker
+# Face tracker
 Just a way more simple face tracker to test the stuff, works well enough for now
 
 > [!NOTE]
-> DF is boring i wish i could work on this more bro :(
+> I totally didnt steal some of this code, its like 80% hand written
+> but no AI!!!!!
 
 
 
-<sub> Call me a femboy the way i can code </sub>
+<sub> Man i just wrote some bullshit </sub>

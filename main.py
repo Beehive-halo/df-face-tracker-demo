@@ -76,20 +76,20 @@ def main():
 
             if frame_number % DETECTION_INTERVAL == 0:
                 detected = vision.detect(frame)
+
                 if detected is not None:
                     target = detected
                     frames_since_detection = 0
+
+                    cx, cy = target["center"]
+                    command = controller.update(cx, cy, FRAME_WIDTH, FRAME_HEIGHT)
+
+                    if servos is not None:
+                        servos.move(command["pan"], command["tilt"])
                 else:
                     frames_since_detection += DETECTION_INTERVAL
                     if frames_since_detection > TARGET_HOLD_FRAMES:
                         target = None
-
-            if target is not None:
-                cx, cy = target["center"]
-                command = controller.update(cx, cy, FRAME_WIDTH, FRAME_HEIGHT)
-
-                if servos is not None:
-                    servos.move(command["pan"], command["tilt"])
 
             now = time.monotonic()
             elapsed = now - fps_started

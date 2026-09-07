@@ -1,45 +1,36 @@
-from picamera2 import Picamera2
-import cv2
 import time
 
-from config import FRAME_WIDTH, FRAME_HEIGHT
+from picamera2 import Picamera2
+
+from config import CAMERA_FPS, CAMERA_WARMUP_SECONDS, FRAME_HEIGHT, FRAME_WIDTH
 
 
 class Camera:
-
     def __init__(self):
-
         self.picam2 = Picamera2()
 
-        config = self.picam2.create_preview_configuration(
+        config = self.picam2.create_video_configuration(
             main={
-                "size": (
-                    FRAME_WIDTH,
-                    FRAME_HEIGHT
-                ),
-                "format": "RGB888"
-            }
+                "size": (FRAME_WIDTH, FRAME_HEIGHT),
+                "format": "RGB888",
+            },
+            controls={"FrameRate": CAMERA_FPS},
+            buffer_count=2,
         )
 
         self.picam2.configure(config)
-
         self.picam2.start()
-
-        time.sleep(2)
-
+        time.sleep(CAMERA_WARMUP_SECONDS)
 
     def read(self):
-
-        frame = self.picam2.capture_array()
-
-        frame = cv2.cvtColor(
-            frame,
-            cv2.COLOR_RGB2BGR
-        )
-
-        return True, frame
-
+        try:
+            return True, self.picam2.capture_array("main")
+        except Exception as exc:
+            print(f"Camera capture failed: {exc}")
+            return False, None
 
     def release(self):
-
-        self.picam2.stop()
+        try:
+            self.picam2.stop()
+        except Exception:
+            pass

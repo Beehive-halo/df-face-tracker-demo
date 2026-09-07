@@ -69,7 +69,7 @@ class _Handler(BaseHTTPRequestHandler):
                 self.wfile.write(f"Content-Length: {len(frame)}\r\n\r\n".encode())
                 self.wfile.write(frame)
                 self.wfile.write(b"\r\n")
-        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, OSError):
             pass
         finally:
             streamer._client_disconnected()
@@ -117,6 +117,10 @@ class StreamServer:
                 lambda: self.stopped or self._version != last_version,
                 timeout=2.0,
             )
+
+            if self.stopped or self._version == last_version:
+                return None, last_version
+
             return self._frame, self._version
 
     def _client_connected(self):

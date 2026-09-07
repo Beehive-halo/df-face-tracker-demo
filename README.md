@@ -1,9 +1,9 @@
-# Lightweight Demo Face tracker
-Just a way more simple face tracker to test the stuff, works well enough for now
+# DF Face Tracker Demo
 
-> [!NOTE]
-> DF is boring i wish i could work on this more bro :(
+A lightweight face-tracking camera demo for design futures
 
+## Hardware used
 
-
-<sub> Call me a femboy the way i can code </sub>
+- Raspberry Pi 3 A+
+- Raspberry Pi camera
+- Pimoroni Pan-Tilt HAT

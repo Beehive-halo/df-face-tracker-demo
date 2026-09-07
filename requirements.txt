@@ -1,1 +1,5 @@
+# Picamera2 and OpenCV should be installed from Raspberry Pi OS packages:
+# sudo apt install python3-picamera2 python3-opencv
+#
+# Only required when USE_SERVOS = True:
 pantilthat

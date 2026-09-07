@@ -2,6 +2,18 @@
 
 A lightweight face-tracking camera demo designed specifically for a Raspberry Pi 3 A+ using Picamera2, OpenCV Haar detection, and a Pimoroni Pan-Tilt HAT.
 
+## Start here
+
+For the shortest complete setup/reference, use [`QUICK_SETUP.md`](QUICK_SETUP.md).
+
+Want to test the face detection and browser stream on a Mac before touching the Pi? Use:
+
+```bash
+python macos_test.py --open-browser
+```
+
+The macOS test uses your Mac webcam and deliberately skips Picamera2, Raspberry Pi diagnostics, the Pan-Tilt HAT, and all servo code. Install its dependencies from `requirements-macos.txt`.
+
 ## Design goals
 
 - Low CPU use on Raspberry Pi 3 A+
@@ -213,15 +225,18 @@ For the Raspberry Pi 3 A+, the defaults are intentionally conservative.
 ## Project structure
 
 ```text
-main.py          main tracking loop and stream publishing
-camera.py        Picamera2 capture
-vision.py        Haar face detection
-controller.py    smoothing and pan/tilt control
-servos.py        Pan-Tilt HAT output
-stream.py        lightweight MJPEG HTTP server
-config.py        tuning and hardware settings
-servo_test.py    manual servo movement test
-diagnostics.py   Raspberry Pi power/throttling check
+main.py                 main Pi tracking loop and stream publishing
+camera.py               Picamera2 capture
+vision.py               Haar face detection
+controller.py           smoothing and pan/tilt control
+servos.py               Pan-Tilt HAT output
+stream.py               lightweight MJPEG HTTP server
+config.py               tuning and hardware settings
+servo_test.py           manual servo movement test
+diagnostics.py          Raspberry Pi power/throttling check
+macos_test.py           Mac webcam/detection/stream test
+requirements-macos.txt  Mac-only Python dependency
+QUICK_SETUP.md          concise Pi + Mac setup/reference
 ```
 
 ## How the browser stream works

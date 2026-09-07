@@ -19,7 +19,7 @@ INDEX_HTML = b"""<!doctype html>
 <body>
   <h1>DF Face Tracker</h1>
   <img src=\"/stream.mjpg\" alt=\"Live camera stream\">
-  <p>Live MJPEG stream from the Raspberry Pi</p>
+  <p>Live MJPEG camera stream</p>
 </body>
 </html>
 """

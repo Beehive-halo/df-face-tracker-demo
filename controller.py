@@ -27,6 +27,10 @@ class Controller:
         self.filtered_x = None
         self.filtered_y = None
 
+    def reset_target(self):
+        self.filtered_x = None
+        self.filtered_y = None
+
     def update(self, face_x, face_y, width, height):
         if self.filtered_x is None:
             self.filtered_x = float(face_x)

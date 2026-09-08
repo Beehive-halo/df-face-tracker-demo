@@ -8,6 +8,7 @@ from config import (
     ENABLE_STREAM,
     FRAME_HEIGHT,
     FRAME_WIDTH,
+    OPENCV_THREADS,
     SHOW_FPS,
     SHOW_PREVIEW,
     STREAM_FPS,
@@ -89,6 +90,9 @@ def main():
     streamer = None
 
     try:
+        cv2.setUseOptimized(True)
+        cv2.setNumThreads(OPENCV_THREADS)
+
         camera = Camera()
         vision = Vision()
         controller = Controller()
@@ -150,6 +154,8 @@ def main():
                 else:
                     frames_since_detection += DETECTION_INTERVAL
                     if frames_since_detection > TARGET_HOLD_FRAMES:
+                        if target is not None:
+                            controller.reset_target()
                         target = None
 
             now = time.monotonic()

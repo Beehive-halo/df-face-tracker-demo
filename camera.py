@@ -6,6 +6,8 @@ from picamera2 import Picamera2
 from config import (
     CAMERA_FPS,
     CAMERA_HFLIP,
+    CAMERA_READ_ATTEMPTS,
+    CAMERA_RETRY_SECONDS,
     CAMERA_VFLIP,
     CAMERA_WARMUP_SECONDS,
     FRAME_HEIGHT,
@@ -35,11 +37,18 @@ class Camera:
         time.sleep(CAMERA_WARMUP_SECONDS)
 
     def read(self):
-        try:
-            return True, self.picam2.capture_array("main")
-        except Exception as exc:
-            print(f"Camera capture failed: {exc}")
-            return False, None
+        last_error = None
+
+        for attempt in range(CAMERA_READ_ATTEMPTS):
+            try:
+                return True, self.picam2.capture_array("main")
+            except Exception as exc:
+                last_error = exc
+                if attempt + 1 < CAMERA_READ_ATTEMPTS:
+                    time.sleep(CAMERA_RETRY_SECONDS)
+
+        print(f"Camera capture failed after {CAMERA_READ_ATTEMPTS} attempts: {last_error}")
+        return False, None
 
     def release(self):
         try:

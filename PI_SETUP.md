@@ -1,6 +1,5 @@
 # Raspberry Pi Setup
 
-
 ## 1. Get/update the project
 
 Fresh install:
@@ -8,7 +7,7 @@ Fresh install:
 ```bash
 git clone https://github.com/Beehive-halo/df-face-tracker-demo.git
 cd df-face-tracker-demo
-git switch pi3a-optimized-rewrite
+git switch df-rewrite
 ```
 
 Already cloned:
@@ -16,7 +15,7 @@ Already cloned:
 ```bash
 cd df-face-tracker-demo
 git fetch origin
-git switch pi3a-optimized-rewrite
+git switch df-rewrite
 git pull
 ```
 
@@ -39,6 +38,8 @@ In `config.py`, make sure:
 USE_SERVOS = False
 ENABLE_STREAM = True
 SHOW_PREVIEW = False
+CAMERA_HFLIP = True
+CAMERA_VFLIP = True
 ```
 
 Run:
@@ -67,7 +68,7 @@ http://PI-IP-ADDRESS:8000/
 
 Check that:
 
-- camera image appears
+- the camera image is upright
 - your face gets a box
 - `TRACKING` appears when your face is found
 - FPS is updating
@@ -88,7 +89,7 @@ Make sure:
 - movement is safe
 - it returns to centre
 
-## . Enable tracking
+## 5. Enable tracking
 
 In `config.py` change:
 
@@ -102,14 +103,24 @@ Then run:
 python main.py
 ```
 
-If an axis moves the wrong way, swap that axis between `1` and `-1`:
+The upside-down camera defaults are:
 
 ```python
-PAN_DIRECTION = -1
-TILT_DIRECTION = 1
+PAN_DIRECTION = 1
+TILT_DIRECTION = -1
 ```
 
-## 6. Next time
+If one axis moves away from your face, stop the program and swap only that axis between `1` and `-1`.
+
+## 6. Check Pi health
+
+```bash
+python diagnostics.py
+```
+
+This reports CPU temperature, available memory, and power/throttling warnings. The best throttling result is `throttled=0x0`.
+
+## 7. Next time
 
 ```bash
 cd df-face-tracker-demo

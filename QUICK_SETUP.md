@@ -5,7 +5,7 @@
 ```bash
 git clone https://github.com/Beehive-halo/df-face-tracker-demo.git
 cd df-face-tracker-demo
-git switch pi3a-optimized-rewrite
+git switch df-rewrite
 ```
 
 Already cloned?
@@ -13,7 +13,7 @@ Already cloned?
 ```bash
 cd df-face-tracker-demo
 git fetch origin
-git switch pi3a-optimized-rewrite
+git switch df-rewrite
 git pull
 ```
 
@@ -43,11 +43,7 @@ http://127.0.0.1:8000/
 
 Press `Q` or `Escape` to stop.
 
-If the camera will not open:
-
-**System Settings → Privacy & Security → Camera**
-
-Allow Terminal / your IDE to use the camera.
+If the camera will not open, allow Terminal or your IDE under **System Settings → Privacy & Security → Camera**.
 
 Try another camera with:
 
@@ -70,13 +66,13 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-### Check power
+### Check power, temperature, and memory
 
 ```bash
 python diagnostics.py
 ```
 
-Best result:
+Best throttling result:
 
 ```text
 throttled=0x0
@@ -90,6 +86,8 @@ Keep this in `config.py`:
 USE_SERVOS = False
 ENABLE_STREAM = True
 SHOW_PREVIEW = False
+CAMERA_HFLIP = True
+CAMERA_VFLIP = True
 ```
 
 Run:
@@ -104,17 +102,7 @@ On your Mac, open the URL printed by the Pi, usually:
 http://raspberrypi.local:8000/
 ```
 
-If that does not work, run:
-
-```bash
-hostname -I
-```
-
-and open:
-
-```text
-http://PI-IP-ADDRESS:8000/
-```
+If that does not work, run `hostname -I` and open `http://PI-IP-ADDRESS:8000/`.
 
 ### Test servos
 
@@ -134,12 +122,14 @@ Then run:
 python main.py
 ```
 
-If an axis moves backwards, change its direction between `1` and `-1` in `config.py`:
+The upside-down camera defaults are:
 
 ```python
-PAN_DIRECTION = -1
-TILT_DIRECTION = 1
+PAN_DIRECTION = 1
+TILT_DIRECTION = -1
 ```
+
+If an axis moves away from your face, stop the program and reverse only that axis.
 
 ---
 

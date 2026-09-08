@@ -1,4 +1,5 @@
 import subprocess
+from pathlib import Path
 
 
 def get_throttled():
@@ -14,16 +15,41 @@ def get_throttled():
 
     text = result.stdout.strip()
     try:
-        value = int(text.split("=", 1)[1], 16)
+        return int(text.split("=", 1)[1], 16)
     except (IndexError, ValueError):
         return None
 
-    return value
+
+def get_cpu_temperature():
+    try:
+        millidegrees = int(
+            Path("/sys/class/thermal/thermal_zone0/temp").read_text().strip()
+        )
+        return millidegrees / 1000.0
+    except (OSError, ValueError):
+        return None
+
+
+def get_available_memory_mb():
+    try:
+        for line in Path("/proc/meminfo").read_text().splitlines():
+            if line.startswith("MemAvailable:"):
+                return int(line.split()[1]) / 1024.0
+    except (OSError, ValueError, IndexError):
+        pass
+    return None
 
 
 def main():
-    value = get_throttled()
+    temperature = get_cpu_temperature()
+    memory_mb = get_available_memory_mb()
 
+    if temperature is not None:
+        print(f"CPU temperature: {temperature:.1f} C")
+    if memory_mb is not None:
+        print(f"Available memory: {memory_mb:.0f} MB")
+
+    value = get_throttled()
     if value is None:
         print("Could not read Raspberry Pi throttling state.")
         return

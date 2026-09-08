@@ -7,14 +7,17 @@ FRAME_WIDTH = 320
 FRAME_HEIGHT = 240
 CAMERA_FPS = 15
 CAMERA_WARMUP_SECONDS = 1.0
+CAMERA_READ_ATTEMPTS = 3
+CAMERA_RETRY_SECONDS = 0.05
+OPENCV_THREADS = 2
 
 # The camera is mounted upside down. Both flips together rotate it 180 degrees.
 CAMERA_HFLIP = True
 CAMERA_VFLIP = True
 
 # Run the expensive Haar scan only every N frames.
-DETECTION_INTERVAL = 3
-TARGET_HOLD_FRAMES = 6
+DETECTION_INTERVAL = 4
+TARGET_HOLD_FRAMES = 8
 
 CASCADE_FILE = str(BASE_DIR / "haarcascade_frontalface_default.xml")
 

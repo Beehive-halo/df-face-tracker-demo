@@ -1,8 +1,16 @@
 import time
 
+from libcamera import Transform
 from picamera2 import Picamera2
 
-from config import CAMERA_FPS, CAMERA_WARMUP_SECONDS, FRAME_HEIGHT, FRAME_WIDTH
+from config import (
+    CAMERA_FPS,
+    CAMERA_HFLIP,
+    CAMERA_VFLIP,
+    CAMERA_WARMUP_SECONDS,
+    FRAME_HEIGHT,
+    FRAME_WIDTH,
+)
 
 
 class Camera:
@@ -16,6 +24,10 @@ class Camera:
             },
             controls={"FrameRate": CAMERA_FPS},
             buffer_count=2,
+            transform=Transform(
+                hflip=CAMERA_HFLIP,
+                vflip=CAMERA_VFLIP,
+            ),
         )
 
         self.picam2.configure(config)

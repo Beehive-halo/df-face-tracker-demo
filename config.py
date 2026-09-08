@@ -8,6 +8,10 @@ FRAME_HEIGHT = 240
 CAMERA_FPS = 15
 CAMERA_WARMUP_SECONDS = 1.0
 
+# The camera is mounted upside down. Both flips together rotate it 180 degrees.
+CAMERA_HFLIP = True
+CAMERA_VFLIP = True
+
 # Run the expensive Haar scan only every N frames.
 DETECTION_INTERVAL = 3
 TARGET_HOLD_FRAMES = 6
@@ -43,9 +47,10 @@ TILT_MAX = 70
 DEFAULT_PAN = 0
 DEFAULT_TILT = 0
 
-# Reverse either value if your physical mount moves the wrong direction.
-PAN_DIRECTION = -1
-TILT_DIRECTION = 1
+# Compensates tracking for the camera's 180-degree image rotation.
+# Reverse either value if your physical mount still moves the wrong direction.
+PAN_DIRECTION = 1
+TILT_DIRECTION = -1
 
 # Tracking controller.
 DEAD_ZONE_X = 16

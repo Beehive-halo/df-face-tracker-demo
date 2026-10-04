@@ -11,20 +11,26 @@ CAMERA_READ_ATTEMPTS = 3
 CAMERA_RETRY_SECONDS = 0.05
 OPENCV_THREADS = 2
 
+# Australia uses 50 Hz mains power. Most mains-powered lights therefore flicker
+# at 100 Hz, so libcamera's matching anti-flicker period is 10,000 microseconds.
+# Unsupported cameras continue normally without this setting.
+CAMERA_ANTI_FLICKER = True
+CAMERA_FLICKER_PERIOD_US = 10000
+
 # The camera is mounted upside down. Both flips together rotate it 180 degrees.
 CAMERA_HFLIP = True
 CAMERA_VFLIP = True
 
 # Run the expensive Haar scan only every N frames.
-DETECTION_INTERVAL = 4
+DETECTION_INTERVAL = 3
 TARGET_HOLD_FRAMES = 8
 
 CASCADE_FILE = str(BASE_DIR / "haarcascade_frontalface_default.xml")
 
-# Haar settings tuned for a low-resolution Pi 3 A+ stream.
-DETECTION_SCALE_FACTOR = 1.12
-DETECTION_MIN_NEIGHBORS = 5
-DETECTION_MIN_SIZE = (32, 32)
+# Haar settings tuned on the Pi 3 A+ for glasses and a low-resolution stream.
+DETECTION_SCALE_FACTOR = 1.10
+DETECTION_MIN_NEIGHBORS = 4
+DETECTION_MIN_SIZE = (28, 28)
 
 # Optional local debug window. Disable for best performance/headless use.
 SHOW_PREVIEW = False
@@ -50,10 +56,9 @@ TILT_MAX = 70
 DEFAULT_PAN = 0
 DEFAULT_TILT = 0
 
-# Compensates tracking for the camera's 180-degree image rotation.
-# Reverse either value if your physical mount still moves the wrong direction.
-PAN_DIRECTION = 1
-TILT_DIRECTION = -1
+# Directions verified on the upside-down physical mount.
+PAN_DIRECTION = -1
+TILT_DIRECTION = 1
 
 # Tracking controller.
 DEAD_ZONE_X = 16

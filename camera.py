@@ -4,6 +4,8 @@ from libcamera import Transform
 from picamera2 import Picamera2
 
 from config import (
+    CAMERA_ANTI_FLICKER,
+    CAMERA_FLICKER_PERIOD_US,
     CAMERA_FPS,
     CAMERA_HFLIP,
     CAMERA_READ_ATTEMPTS,
@@ -33,8 +35,34 @@ class Camera:
         )
 
         self.picam2.configure(config)
+        self._apply_anti_flicker()
         self.picam2.start()
         time.sleep(CAMERA_WARMUP_SECONDS)
+
+    def _apply_anti_flicker(self):
+        if not CAMERA_ANTI_FLICKER:
+            return
+
+        required_controls = {"AeFlickerMode", "AeFlickerPeriod"}
+        if not required_controls.issubset(self.picam2.camera_controls):
+            print("Camera anti-flicker controls are unavailable; continuing without them.")
+            return
+
+        try:
+            # Manual mode is enum value 1 in libcamera. For 50 Hz mains,
+            # a 10,000 us period cancels the resulting 100 Hz light flicker.
+            self.picam2.set_controls(
+                {
+                    "AeFlickerMode": 1,
+                    "AeFlickerPeriod": CAMERA_FLICKER_PERIOD_US,
+                }
+            )
+            print(
+                "Camera anti-flicker enabled "
+                f"({CAMERA_FLICKER_PERIOD_US} us period)."
+            )
+        except Exception as exc:
+            print(f"Could not enable camera anti-flicker: {exc}")
 
     def read(self):
         last_error = None

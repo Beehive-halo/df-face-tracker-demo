@@ -1,62 +1,36 @@
 import cv2
 
-from config import CASCADE_FILE
+from config import (
+    CASCADE_FILE,
+    DETECTION_MIN_NEIGHBORS,
+    DETECTION_MIN_SIZE,
+    DETECTION_SCALE_FACTOR,
+)
 
 
 class Vision:
-
     def __init__(self):
-
-        self.detector = cv2.CascadeClassifier(
-            CASCADE_FILE
-        )
-
+        self.detector = cv2.CascadeClassifier(CASCADE_FILE)
         if self.detector.empty():
-            print("ERROR: Cascade failed loading")
-        else:
-            print("Cascade loaded")
-
+            raise RuntimeError(f"Failed to load Haar cascade: {CASCADE_FILE}")
 
     def detect(self, frame):
-
-        gray = cv2.cvtColor(
-            frame,
-            cv2.COLOR_BGR2GRAY
-        )
+        # Picamera2 RGB888 buffers work with OpenCV's BGR-oriented operations.
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.equalizeHist(gray)
 
         faces = self.detector.detectMultiScale(
             gray,
-            scaleFactor=1.05,
-            minNeighbors=3,
-            minSize=(40,40)
+            scaleFactor=DETECTION_SCALE_FACTOR,
+            minNeighbors=DETECTION_MIN_NEIGHBORS,
+            minSize=DETECTION_MIN_SIZE,
         )
-
 
         if len(faces) == 0:
             return None
 
-
-        face = max(
-            faces,
-            key=lambda f: f[2] * f[3]
-        )
-
-
-        x,y,w,h = face
-
-
+        x, y, w, h = max(faces, key=lambda face: face[2] * face[3])
         return {
-
-            "box": (
-                x,
-                y,
-                w,
-                h
-            ),
-
-            "center": (
-                x + w//2,
-                y + h//2
-            )
-
+            "box": (int(x), int(y), int(w), int(h)),
+            "center": (int(x + w // 2), int(y + h // 2)),
         }

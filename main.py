@@ -158,6 +158,9 @@ def main():
                             controller.reset_target()
                         target = None
 
+            if servos is not None:
+                servos.update()
+
             now = time.monotonic()
             elapsed = now - fps_started
             if elapsed >= 1.0:

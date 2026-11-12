@@ -14,7 +14,7 @@ A face tracking security system built with Python utilising a Raspberry Pi 3A+
       </a>
     </td>
     <td>
-      <a href="https://github.com"><strong>Beehive Halo</strong></a>
+      <a href="https://github.com/beehive-halo"><strong>Beehive Halo</strong></a>
     </td>
   </tr>
 </table>

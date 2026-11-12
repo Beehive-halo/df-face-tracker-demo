@@ -10,9 +10,18 @@ A face tracking security system built of Python utilising a Rasberry Pi 3A+
 
 ## Authors
 
-[![Beehive Halo](https://github.com/Beehive-halo/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true)](https://github.com/beehive-halo)
-
-* <a href="https://github.com/beehive-halo"><img src="https://github.com/Beehive-halo/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true" width="22" height="22" align="center" alt="Beehive Halo" /> **Beehive Halo**</a>
+<table>
+  <tr>
+    <td>
+      <a href="https://github.com">
+        <img src="https://github.com/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true" width="24" alt="Beehive Halo" />
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com"><strong>Beehive Halo</strong></a>
+    </td>
+  </tr>
+</table>
 
 
 

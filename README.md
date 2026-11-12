@@ -1,15 +1,27 @@
-# DF Face Tracker Demo
 
-A lightweight face-tracking camera demo for design futures
+![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
-> [!NOTE]
-> I totally didnt steal some of this code, its like 80% hand written
-> but no AI!!!!!
 
-## Hardware used
+# Sivraj Security System
 
-- Raspberry Pi 3 A+
-- Raspberry Pi camera
-- Pimoroni Pan-Tilt HAT
+A face tracking security system built of Python utilising a Rasberry Pi 3A+
 
-<sub> Man i just wrote some bullshit </sub>
+
+
+## Authors
+
+[![Beehive Halo](https://github.com/Beehive-halo/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true)](https://github.com/beehive-halo)
+
+* <a href="https://github.com/beehive-halo"><img src="https://github.com/Beehive-halo/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true" width="22" height="22" align="center" alt="Beehive Halo" /> **Beehive Halo**</a>
+
+
+
+
+## Roadmap
+
+- Additional browser support
+
+- Better customisation
+
+- Improved Proformance
+

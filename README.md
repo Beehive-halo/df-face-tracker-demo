@@ -1,12 +1,8 @@
-
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
-
 
 # Sivraj Security System
 
-A face tracking security system built of Python utilising a Rasberry Pi 3A+
-
-
+A face tracking security system built with Python utilising a Raspberry Pi 3A+
 
 ## Authors
 
@@ -14,7 +10,7 @@ A face tracking security system built of Python utilising a Rasberry Pi 3A+
   <tr>
     <td>
       <a href="https://github.com">
-        <img src="https://github.com/df-face-tracker-demo/blob/df-rewrite/Beehivelogo.png?raw=true" width="24" alt="Beehive Halo" />
+        <img src="Beehivelogo.png" width="24" alt="Beehive Halo" />
       </a>
     </td>
     <td>
@@ -23,14 +19,8 @@ A face tracking security system built of Python utilising a Rasberry Pi 3A+
   </tr>
 </table>
 
-
-
-
 ## Roadmap
 
 - Additional browser support
-
 - Better customisation
-
-- Improved Proformance
-
+- Improved Performance

@@ -1,10 +1,26 @@
-# Face tracker
-Just a way more simple face tracker to test the stuff, works well enough for now
+![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
-> [!NOTE]
-> I totally didnt steal some of this code, its like 80% hand written
-> but no AI!!!!!
+# Sivraj Security System
 
+A face tracking security system built with Python utilising a Raspberry Pi 3A+
 
+## Authors
 
-<sub> Man i just wrote some bullshit </sub>
+<table>
+  <tr>
+    <td>
+      <a href="https://github.com">
+        <img src="Beehivelogo.png" width="24" alt="Beehive Halo" />
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/beehive-halo"><strong>Beehive Halo</strong></a>
+    </td>
+  </tr>
+</table>
+
+## Roadmap
+
+- Additional browser support
+- Better customisation
+- Improved Performance
